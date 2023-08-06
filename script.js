@@ -1,12 +1,17 @@
 let searchBtn = document.getElementById("search-btn");
 let countryInp = document.getElementById("country-inp");
 
+function numberWithSpaces(word) {
+    return word.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+}
+
 searchBtn.addEventListener("click", () => {
     let countryName = countryInp.value;
     let finalUrl = `https://restcountries.com/v3.1/name/${countryName}?fullText=true`;
     console.log(finalUrl);
     fetch(finalUrl).then((response) => response.json())
     .then((data) => {
+        spacesPopulation = numberWithSpaces(data[0].population);
         result.innerHTML = `
             <img src="${data[0].flags.svg}"
             class="flag-img">
@@ -26,7 +31,7 @@ searchBtn.addEventListener("click", () => {
             <div class="wrapper">
                 <div class="data-wrapper">
                     <h4>Population:</h4>
-                    <span>${data[0].population}</span>
+                    <span>${spacesPopulation}</span>
                 </div>
             </div>
             <div class="wrapper">
